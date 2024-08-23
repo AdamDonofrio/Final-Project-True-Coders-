@@ -1,7 +1,20 @@
+using Final_Project__True_Coders_;
+using MySql.Data.MySqlClient;
+using System.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<IDbConnection>((s) =>
+{
+    IDbConnection conn = new MySqlConnection(builder.Configuration.GetConnectionString("games_schema"));
+    conn.Open();
+    return conn;
+});
+
+builder.Services.AddTransient<IGameRepository, GameRepository>();
 
 var app = builder.Build();
 
@@ -22,6 +35,9 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{listNum?}");
+
 
 app.Run();
+
+

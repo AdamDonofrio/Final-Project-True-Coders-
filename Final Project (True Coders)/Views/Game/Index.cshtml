@@ -1,0 +1,58 @@
+﻿@model GameGenresViewModel
+
+<h2>Games</h2>
+
+<div style="display: block">
+    <a href="/Game/InsertGame/">Create a New Game</a>
+</div>
+
+<table class="table">
+    
+    @*Names at the top of the screen to lable each of the colams*@
+    <tr> 
+        <th>ListNumber</th>
+        <th>Name</th>
+        <th>Genre</th>
+        <th>Platforms</th>
+        <th>If Ends</th>
+        <th>If Finished</th>
+        <th>How Long To Beat (Hours)</th>      
+    </tr>
+
+    
+    @*The foreach loop is used to go through each game so it displays all the ones in the SQL workbench*@
+    @foreach (var game in @Model.ModelGames)
+    {
+        <tr>  
+            <td><a href=/Game/ViewGame/@game.ListNumber>@game.ListNumber</a></td>
+            <td>@game.Name</td>
+            <td>@Model.ModelGenres.ElementAt(game.GenreID - 1).Name</td>
+            
+            <td>@game.Platforms</td>
+            @if (@game.IfEnds == true)
+            {
+
+                <td>Can End</td>
+            }
+            else
+            {
+
+                <td>No Ending</td>
+            }
+
+            @if (@game.IfFinished == true)
+            {
+
+                <td>Finished</td>
+            }
+            else
+            {
+
+                <td>Incomplete</td>
+            }
+            <td>@game.HowLongToBeat</td>
+        </tr>
+    }
+
+</table>
+

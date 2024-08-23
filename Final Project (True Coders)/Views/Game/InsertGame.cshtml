@@ -1,0 +1,69 @@
+﻿@model Game
+
+<h2>Create a New Game</h2>
+
+
+@using (Html.BeginForm("InsertGameToDatabase", "Game", "Post"))
+{
+    //ListNumber:
+    <input asp-for="ListNumber" type="hidden" value="" />
+    
+    //Name:
+    <label asp-for="Name" class="control-label">name</label>
+    <input type="text" name="Name" class="form-control" value="@Model.Name" />
+
+    //Platforms:
+    <div class="form-group">
+        @Html.LabelFor(game => game.Platforms, "platforms")
+        @Html.DropDownListFor(game => game.Platforms, new List<SelectListItem>
+        {
+            @*Drop down list manuly put in to not overcomplicate drop down for such a small part*@
+            new SelectListItem {Text = "GOG", Value = "GOG"},
+            new SelectListItem {Text = "Xbox", Value = "Xbox"},
+            new SelectListItem {Text = "Steam", Value = "Steam"},
+            new SelectListItem {Text = "GOG Xbox", Value = "GOG Xbox"},
+            new SelectListItem {Text = "Xbox Steam", Value = "Xbox Steam"},
+            new SelectListItem {Text = "GOG Steam", Value = "GOG Steam"},
+            new SelectListItem {Text = "GOG Xbox Steam", Value = "GOG Xbox Steam"}
+        }, new {@class = "form-control"})
+    </div>
+
+    //Can End:
+    <div class="form-group">
+        @Html.LabelFor(game => game.IfEnds, "Can the Game End")
+        @Html.DropDownListFor(game => game.IfEnds, new List<SelectListItem>
+        {
+            new SelectListItem {Text = "Can End", Value = "true"},
+            new SelectListItem {Text = "No Ending", Value = "false"}
+        }, new {@class = "form-control"})
+    </div>
+
+    //Is Finised
+    <div class="form-group">                    
+        @Html.LabelFor(game => game.IfFinished, "Is the Game Finished")
+        @Html.DropDownListFor(game => game.IfFinished, new List<SelectListItem>
+        {
+            new SelectListItem {Text = "Finished", Value = "true"},
+            new SelectListItem {Text = "Incomplete", Value = "false"}
+        }, new {@class = "form-control"})
+    </div>
+
+    //How Long To Beat
+    <label asp-for="HowLongToBeat" class="control-label">How Long To Beat</label>
+    <input type="number" name="howLongToBeat" class="form-control" value="@Model.HowLongToBeat" />
+
+    //Genre:
+    <div class="form-group">
+        <label for="">Select a Genre</label>
+        <select class="form-control" name="GenreID" value="">
+            @foreach (var cat in Model.Genres)
+            {
+                <option value="@cat.GenreID">@cat.GenreID @cat.Name</option>
+            }
+
+        </select>
+    </div>
+
+    //Update Button:
+    <input type="submit" value="Create Game" class="btn btn-primary" />
+}

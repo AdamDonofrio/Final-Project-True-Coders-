@@ -1,0 +1,41 @@
+﻿@model Game
+
+<h2>Update @Model.Name</h2>
+
+@using (Html.BeginForm("UpdateGameToDatabase", "Game", "Post"))
+{
+    //ListNumber:
+    <input asp-for="ListNumber" type="hidden" value="@Model.ListNumber" />
+
+    
+    //Platforms:
+    <div class="form-group">
+        @Html.LabelFor(game => game.Platforms, "platforms")
+        @Html.DropDownListFor(game => game.Platforms, new List<SelectListItem>
+    {
+    new SelectListItem {Text = "GOG", Value = "GOG"},
+    new SelectListItem {Text = "Xbox", Value = "Xbox"},
+    new SelectListItem {Text = "Steam", Value = "Steam"},
+    new SelectListItem {Text = "GOG Xbox", Value = "GOG Xbox"},
+    new SelectListItem {Text = "Xbox Steam", Value = "Xbox Steam"},
+    new SelectListItem {Text = "GOG Steam", Value = "GOG Steam"},
+    new SelectListItem {Text = "GOG Xbox Steam", Value = "GOG Xbox Steam"}
+    }, new {@class = "form-control"})
+    </div>
+
+    
+
+    //Is Finished:
+    <div class="form-group">
+        @Html.LabelFor(game => game.IfFinished, "Is the Game Finished")
+        @Html.DropDownListFor(game => game.IfFinished, new List<SelectListItem>
+    {
+    new SelectListItem {Text = "Finished", Value = "true"},
+    new SelectListItem {Text = "Incomplete", Value = "false"}
+    }, new {@class = "form-control"})
+    </div>
+
+    
+    //Update Buttion
+    <input type="submit" value="Update Game" class="btn btn-primary" />
+}

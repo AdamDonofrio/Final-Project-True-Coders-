@@ -1,0 +1,63 @@
+﻿@model GameGenresViewModel
+
+<h3>@Model.ModelGames.ElementAt(0).Name Information</h3>
+
+<table class="table">
+    <tr>
+        <th>ListNumber</th>
+        <th>Name</th>
+        <th>Genre</th>
+        <th>Platforms</th>
+        <th>If Ends</th>
+        <th>If Finished</th>
+        <th>How Long To Beat (Hours)</th>
+    </tr>
+
+
+    <tr>
+        @*using .ElementAt(0) because for ViewGame there will only be one game on the screen so only need the first index*@
+        <td><a href=/Game/ViewGame/@Model.ModelGames.ElementAt(0).ListNumber>@Model.ModelGames.ElementAt(0).ListNumber</a></td>
+        <td>@Model.ModelGames.ElementAt(0).Name</td>
+        <td>@Model.ModelGenres.ElementAt(Model.ModelGames.ElementAt(0).GenreID - 1).Name</td>
+
+        <td>@Model.ModelGames.ElementAt(0).Platforms</td>
+        @if (@Model.ModelGames.ElementAt(0).IfEnds == true)
+        {
+
+            <td>Can End</td>
+        }
+        else
+        {
+
+            <td>No Ending</td>
+        }
+
+        @if (@Model.ModelGames.ElementAt(0).IfFinished == true)
+        {
+
+            <td>Finished</td>
+        }
+        else
+        {
+
+            <td>Incomplete</td>
+        }
+        <td>@Model.ModelGames.ElementAt(0).HowLongToBeat</td>
+    </tr>
+
+</table>
+
+@*Update game link*@
+<div style="display: block">
+    <a href="/Game/UpdateGame/@Model.ModelGames.ElementAt(0).ListNumber">Update this Game</a>
+</div>
+
+@*Delete Game Button*@
+<div style="display: block">
+
+    @using (Html.BeginForm("DeleteGame", "Game", "Post"))
+    {
+        <input type="hidden" asp-for="ModelGames.ElementAt(0).ListNumber" value="@Model.ModelGames.ElementAt(0).ListNumber" />
+        <input type="submit" onclick="return confirm('Are you sure?')" value="Delete this game" />
+    }
+</div>
